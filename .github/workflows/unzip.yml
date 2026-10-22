@@ -1,0 +1,28 @@
+name: Unzip project (sekali jalan)
+
+on:
+  push:
+    paths: ["project.zip"]
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  unzip:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Extract and commit project files
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          unzip -o project.zip
+          cp -r personal-agent-android/. .
+          rm -rf personal-agent-android project.zip .github/workflows/unzip.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Isi project Agen Pribadi v1 (dari zip)"
+          git push
+          gh workflow run build-apk.yml

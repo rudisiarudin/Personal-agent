@@ -5,10 +5,6 @@ on:
   push:
     paths: ["project.zip"]
 
-permissions:
-  contents: write
-  actions: write
-
 jobs:
   unzip:
     runs-on: ubuntu-latest

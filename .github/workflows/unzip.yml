@@ -1,12 +1,14 @@
 name: Unzip project (sekali jalan)
 
 on:
+  workflow_dispatch:
   push:
     paths: ["project.zip"]
 
 permissions:
   contents: write
   actions: write
+  workflows: write
 
 jobs:
   unzip:
